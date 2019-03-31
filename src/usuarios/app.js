@@ -9,7 +9,7 @@ const directoriopartials = path.join(__dirname,'../../templates/partials' );
 app.use(express.static(directoriopublico));
 hbs.registerPartials(directoriopartials);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:false}))
 app.set('view engine','hbs');
 app.get('/',(req,res) =>{
 	res.render('index',{
@@ -17,47 +17,35 @@ app.get('/',(req,res) =>{
 });
 path.join(__dirname,'../../public' );
 
-app.get('/verUsuarios',(req,res)=>{
+app.post('/verUsuarios',(req,res)=>{
 	console.log(req.body);
 	res.render('verUsuarios',{
-		documentoDeIdentidad: req.query.id,
-		nombre: req.query.nombre,
-		correo: req.query.correo,
-		telefono:req.query.telefono
+		documentoDeIdentidad: req.body.id,
+		nombre: req.body.nombre,
+		correo: req.body.correo,
+		telefono:req.body.telefono
 	});
 });
 
 app.get('/crearUsuario',(req,res)=>{
-	res.render('crearUsuario',{
-		documentoDeIdentidad: req.query.id,
-		nombre: req.query.nombre,
-		correo: req.query.correo,
-		telefono:req.query.telefono
-	});
+	res.render('crearUsuario')
 });
 
 app.get('/crearCurso',(req,res)=>{
-	console.log(req.body);
-	res.render('crearCurso',{
-
-		nombre : req.query.nombre,
-		idCurso: req.query.id,
-		descripcion: req.query.descripcion,
-		valor: req.query.valor,
-		modalidad: req.query.modalidad,
-		intensidadHoraria: req.query.intensidad
-	});
+	res.render('crearCurso')
 });
 
-app.get('/Vercursos',(req,res)=>{
+app.post('/VerCursos',(req,res)=>{
+	console.log(req.body);
 	res.render('verCursos',{
-		nombre : req.query.nombre,
-		idCurso: req.query.id,
-		descripcion: req.query.descripcion,
-		valor: req.query.valor,
-		modalidad: req.query.modalidad,
-		intensidadHoraria: req.query.intensidad
+		nombre : req.body.nombre,
+		idCurso: req.body.id,
+		descripcion: req.body.descripcion,
+		valor: req.body.valor,
+		modalidad: req.body.modalidad,
+		intensidadHoraria: req.body.intensidad
 	});
+
 });
 
 app.get('/inscribir',(req,res)=>{

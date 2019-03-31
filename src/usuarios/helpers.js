@@ -23,6 +23,7 @@ hbs.registerHelper('crear',(documentoDeIdentidad,nombre,correo,telefono)=>{
 });
 
 hbs.registerHelper('crearCurso',(nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado)=>{
+	console.log(nombre);
 	listaCursos = require('../cursos/funcionesCurso');
 	listaCursos.crearCurso(nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado);
 });
