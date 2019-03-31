@@ -5,11 +5,11 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser')
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../public' );
-const directoriopartials = path.join(__dirname,'../partials' );
+const directoriopartials = path.join(__dirname,'../templates/partials' );
 app.use(express.static(directoriopublico));
 hbs.registerPartials(directoriopartials);
 
-app.use(bodyParser.urlencode({extended:false}))
+//app.use(bodyParser.urlencode({extended:false}))
 app.set('view engine','hbs');
 app.get('/',(req,res) =>{
 	res.render('index',{
@@ -25,6 +25,22 @@ app.get('/calculos',(req,res)=>{
 		nota2:parseInt(req.query.nota2)
 	});
 });
+
+app.get('/crearCurso',(req,res)=>{
+	res.render('crearCurso')
+})
+
+app.get('/Vercursos',(req,res)=>{
+	res.render('verCursos')
+})
+
+app.get('/inscribir',(req,res)=>{
+	res.render('inscribir')
+})
+
+app.get('/verInscritos',(req,res)=>{
+	res.render('verInscritos')
+})
 
 app.get('*',(req,res)=>{
 	res.render('error',{
