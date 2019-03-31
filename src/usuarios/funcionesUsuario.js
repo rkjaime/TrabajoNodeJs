@@ -1,16 +1,19 @@
 const fs = require ('fs');
 listaUsuarios = [];
 
-const crear = (usuario) => {
+const crear = (documentoDeIdentidad,nombre,correo,telefono,rol) => {
+	console.log(nombre);
 		listar();	
 	let usr = {
-		documentoDeIdentidad : usuario.documentoDeIdentidad,
-		nombre : usuario.nombre,
-		correo: usuario.correo,
-		telefono : usuario.telefono,
-		rol:usuario.rol
+		documentoDeIdentidad : documentoDeIdentidad,
+		nombre : nombre,
+		correo: correo,
+		telefono : telefono,
+		rol:rol
+
 	};
-	let duplicado = listaUsuarios.find(doc => doc.documentoDeIdentidad == usuario.documentoDeIdentidad);
+
+	let duplicado = listaUsuarios.find(doc => doc.documentoDeIdentidad == documentoDeIdentidad);
 	if(!duplicado){
 	listaUsuarios.push(usr);	
 	guardar();
@@ -32,7 +35,7 @@ const listar = () => {
 
 const guardar = () => {
 	let datos = JSON.stringify(listaUsuarios);
-	fs.writeFile('usuarios.json',datos,(err)=>{
+	fs.writeFile('src/usuarios/usuarios.json',datos,(err)=>{
 		if (err) throw (err);
 		console.log('Usuario creado con exito');
 	})
