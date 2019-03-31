@@ -1,1 +1,1 @@
-[{"nombre":"jaime","idCurso":1,"descripcion":"curso","valor":12,"modalidad":"virtual","intensidadHoraria":24,"estado":"disponible"}]
+[{"nombre":"nodejs","idCurso":2,"descripcion":"curso","valor":12,"modalidad":"virtual","intensidadHoraria":12,"estado":"cerrado"},{"nombre":"nodejs","idCurso":3,"descripcion":"curso","valor":12,"modalidad":"virtual","intensidadHoraria":12,"estado":"cerrado"}]
