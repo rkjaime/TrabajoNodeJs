@@ -2,6 +2,7 @@ const fs = require ('fs');
 listaCursosUsuarios = [];
 listaCursos = [];
 
+//listaCursosUsuarios = require ('./CursosUsuarios.json');
 listaCursos = require ('../cursos/cursos.json');
 listaUsuarios = require('../usuarios/usuarios.json');
 
@@ -9,10 +10,11 @@ const crear = (cursoUsuario) => {
 	listar();	
 	let curU = {
 		documentoDeIdentidad : cursoUsuario.documentoDeIdentidad,
-		idCurso : cursoUsuario.idCurso
-	};
-    let idCurso = listaCursosUsuarios.find(id => id.idCurso == cursoUsuario.idCurso);
-    let ced = listaCursosUsuarios.find(cod => cod.idCurso == cursoUsuario.documentoDeIdentidad);
+		nombre : cursoUsuario.nombre
+    };
+    let nombre = listaCursosUsuarios.find(id=> id.nombre == cursoUsuario.nombre);
+    
+    let ced = listaCursosUsuarios.find(cod => cod.documentoDeIdentidad == cursoUsuario.documentoDeIdentidad);
    
     let curso = listaCursos.find(nom =>nom.nombre == cursoUsuario.nombre);
     let usuario = listaUsuarios.find(ced => ced.documentoDeIdentidad == cursoUsuario.documentoDeIdentidad);
@@ -24,7 +26,7 @@ const crear = (cursoUsuario) => {
         {
             console.log('El curso no existe');   
         }else{
-            if(!idCurso && !ced ){
+            if(!nombre && !ced ){
                 listaCursosUsuarios.push(curU);	
                 guardar();
                 
@@ -36,9 +38,24 @@ const crear = (cursoUsuario) => {
        
     }
 }   
+const eliminar = (nom) =>{
+    listar();
+    let nombre = listaCursosUsuarios.find(id=> id.nombre == nom);
+    let nuevo = listaCursosUsuarios.filter(nomb => nomb.nombre == nom);
+    
+    if(nuevo.length == listaCursosUsuarios.length){
+        console.log("no tienes ningun curso con este nombre");
+    }else{
+        listaCursosUsuarios = nuevo
+        console.log("se elimino con exito");
+        guardar();
+    }
+}
+
 const listar = () => {
 	try{
-        listaCursosUsuarios = require('./cursosUsuarios.json');
+        console.log("Cursos");
+        listaCursosUsuarios = require('./CursosUsuarios.json');
 		}
 		catch(error){
 			listaCursosUsuarios=[];
@@ -54,5 +71,7 @@ const guardar = () => {
 }
 
 module.exports = {
-	crear
+    crear, 
+    eliminar,
+    listar
 }
