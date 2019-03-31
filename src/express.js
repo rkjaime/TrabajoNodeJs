@@ -14,11 +14,13 @@ app.get('/',(req,res) =>{
 		estudiante:'sebastian'});
 });
 path.join(__dirname,'../public' );
+
 app.get('/calculos',(req,res)=>{
+	console.log(req.query);
 	res.render('calculos',{
-		estudiante:'Juliana',
-		nota1:4,
-		nota2:5
+		estudiante:req.query.nombre,
+		nota1:parseInt(req.query.nota1),
+		nota2:parseInt(req.query.nota2)
 	});
 });
 //app.use(express.static(__dirname + '/public'))
