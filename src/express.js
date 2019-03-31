@@ -38,7 +38,6 @@ app.get('/inscribir',(req,res)=>{
 	res.render('inscribir',{
 		documento: req.body.documentoDeIdentidad,
 		nombre: req.body.nombre
-		
 	});
 });
 app.get('/eliminar',(req,res)=>{
