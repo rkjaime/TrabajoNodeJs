@@ -21,3 +21,12 @@ hbs.registerHelper('crear',(documentoDeIdentidad,nombre,correo,telefono)=>{
 	listaUsuarios = require('./funcionesUsuario');
 	listaUsuarios.crear(documentoDeIdentidad,nombre,correo,telefono);
 });
+
+hbs.registerHelper('crearCurso',(nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado)=>{
+	listaCursos = require('../cursos/funcionesCurso');
+	listaCursos.crearCurso(nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado);
+});
+
+
+
+

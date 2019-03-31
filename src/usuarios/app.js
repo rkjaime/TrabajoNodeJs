@@ -9,7 +9,7 @@ const directoriopartials = path.join(__dirname,'../../templates/partials' );
 app.use(express.static(directoriopublico));
 hbs.registerPartials(directoriopartials);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine','hbs');
 app.get('/',(req,res) =>{
 	res.render('index',{
@@ -36,9 +36,29 @@ app.get('/crearUsuario',(req,res)=>{
 	});
 });
 
+app.get('/crearCurso',(req,res)=>{
+	console.log(req.body);
+	res.render('crearCurso',{
+
+		nombre : req.query.nombre,
+		idCurso: req.query.id,
+		descripcion: req.query.descripcion,
+		valor: req.query.valor,
+		modalidad: req.query.modalidad,
+		intensidadHoraria: req.query.intensidad
+	});
+});
+
 app.get('/Vercursos',(req,res)=>{
-	res.render('verCursos')
-})
+	res.render('verCursos',{
+		nombre : req.query.nombre,
+		idCurso: req.query.id,
+		descripcion: req.query.descripcion,
+		valor: req.query.valor,
+		modalidad: req.query.modalidad,
+		intensidadHoraria: req.query.intensidad
+	});
+});
 
 app.get('/inscribir',(req,res)=>{
 	res.render('inscribir')
