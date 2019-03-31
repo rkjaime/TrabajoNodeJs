@@ -26,8 +26,8 @@ app.get('/calculos',(req,res)=>{
 	});
 });
 
-app.get('/crearCurso',(req,res)=>{
-	res.render('crearCurso')
+app.get('/crearUsuario',(req,res)=>{
+	res.render('crearUsuario')
 })
 
 app.get('/Vercursos',(req,res)=>{
