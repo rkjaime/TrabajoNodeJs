@@ -1,15 +1,14 @@
 const fs = require ('fs');
 listaUsuarios = [];
-
+const {crearCurso,listarCurso,guardarCurso} = require('../cursos/funcionesCurso');
 const crear = (documentoDeIdentidad,nombre,correo,telefono,rol) => {
-	console.log(nombre);
 		listar();	
 	let usr = {
 		documentoDeIdentidad : documentoDeIdentidad,
 		nombre : nombre,
 		correo: correo,
 		telefono : telefono,
-		rol:rol
+		rol:'aspirante'
 
 	};
 

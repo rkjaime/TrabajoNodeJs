@@ -1,8 +1,8 @@
 const fs = require ('fs');
 listaCursos = [];
 
-const crear = (curso) => {
-	listar();	
+const crearCurso = (curso) => {
+	listarCurso();	
 	let cur = {
 		nombre : curso.nombre,
 		idCurso : curso.idCurso,
@@ -12,10 +12,10 @@ const crear = (curso) => {
 		intensidadHoraria:curso.intensidadHoraria,
 		estado:curso.estado
 	};
-	let duplicado = listaUsuarios.find(id => id.idCurso == curso.idCurso);
+	let duplicado = listaCursos.find(id => id.idCurso == curso.idCurso);
 	if(!duplicado){
 	listaCursos.push(cur);	
-	guardar();
+	guardarCurso();
 	
 	}
 else
@@ -23,16 +23,16 @@ else
 
 }
 
-const listar = () => {
+const listarCurso = () => {
 	try{
-	listaUsuarios = require('./cursos.json');
+	listaCursos= require('./cursos.json');
 		}
 		catch(error){
-			listaUsuarios=[];
+			listaCursos=[];
 		}
 }
 
-const guardar = () => {
+const guardarCurso = () => {
 	let datos = JSON.stringify(listaCursos);
 	fs.writeFile('cursos.json',datos,(err)=>{
 		if (err) throw (err);
@@ -40,6 +40,10 @@ const guardar = () => {
 	})
 }
 
+let buscarCurso = (id) => {
+	return cursos.find( (curso) => curso.id === id);
+}
+
 module.exports = {
-	crear
+	crearCurso,listarCurso,guardarCurso
 }
