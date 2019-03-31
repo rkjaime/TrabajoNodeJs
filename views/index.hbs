@@ -5,11 +5,12 @@
     <link href="css/style.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
-<form action="/calculos" method="get">
+<form action="/calculos" method="post">
+	<input type="text" name="documento de identidad">
 	<input type="text" name="nombre">
-	<input type="number" name="nota1">
-	<input type="number" name="nota2">
-	<button>calcular</button>
+	<input type="text" name="correo">
+	<input type="text" name="telefono">
+	<button>enviar</button>
 {{listar}}
 </body>
 </html>

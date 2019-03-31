@@ -6,15 +6,7 @@ hbs.registerHelper('hola', (nota1, nota2) =>{
 
 hbs.registerHelper('listar',()=>{
 	listaEstudiantes = require('./listado.json');
-	let texto = "<table> \
-				<thead> \
-				<th>Nombre </th>\
-				<th>Matematica</th>\
-				<th>Ingles </th>\
-				<th>Programacion </th>\
-				</thead> \
-				<tbody> ";
-
+	let texto = 
 	' lista de estudiantes <br>';
 	listaEstudiantes.forEach(estudiante =>{
 		texto = texto + 
