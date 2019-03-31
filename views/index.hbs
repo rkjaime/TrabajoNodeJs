@@ -5,7 +5,11 @@
     <link href="css/style.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
-    <h1>Bienvenidos {{estudiante}}</h1>
-    <p>Primera pagina</p>
+<form action="/calculos" method="get">
+	<input type="text" name="nombre">
+	<input type="number" name="nota1">
+	<input type="number" name="nota2">
+	<button>calcular</button>
+{{listar}}
 </body>
 </html>
