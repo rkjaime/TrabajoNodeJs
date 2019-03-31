@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const hbs = require('hbs');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../public' );
 const directoriopartials = path.join(__dirname,'../templates/partials' );
@@ -41,7 +41,9 @@ app.get('/inscribir',(req,res)=>{
 		
 	});
 });
-
+app.get('/eliminar',(req,res)=>{
+	res.render('eliminar')
+})
 app.get('/verInscritos',(req,res)=>{
 	res.render('verInscritos')
 })

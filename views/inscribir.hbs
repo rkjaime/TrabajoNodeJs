@@ -1,9 +1,28 @@
 {{>header}}
-<h2>se muestra el inscribir</h2>
-<h2>Formulario para ingresar un nuevo curso</h2>
-<p>utilice este formulario para ingresar la informacion del usuario</p>
-<form action="/inscribir" method="post">
-	<input type="text" name="documento">
-	<input type="text" name="nombre">
-	<button>enviar</button>
+<div id="createUser" class="container">
+<h2>Formulario para elegir nuevo curso</h2>
+<p>utilice este formulario para ingresar la informacion del usuario y el curso</p>
+	<div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
+		<br>
+		<br>
+		<form novalidate [formGroup]="userForm"action="/inscribir" method="get">
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label for="id">Documento de identidad</label>
+					<input type="text" class="form-control" id="id" name="id">
+				</div>
+				<div class="form-group col-md-6">
+					<label for="NOMBRE">Nombre Curso</label>
+					<input type="text" class="form-control" id="nombre" name="nombre">
+				</div>
+			<div class="form-row">
+				<button class="btn btn-outline-primary" type="submit"  {{ingresar}}
+			>Guardar</button>
+			</div>
+			<br>
+			<br>
+		</form>
+	</div>
+</div>
+
 {{>footer}}

@@ -9,6 +9,6 @@ if(argv._[0]=='inscribir'){
 if(argv._[0]=='eliminar'){
 	funciones.eliminar(argv);
 }
-if(argv._[0]=='listar'){
+if(argv._[0]=='verInscritos'){
 	funciones.listar();
 }
