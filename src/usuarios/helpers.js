@@ -1,17 +1,6 @@
 const hbs = require('hbs');
 
-hbs.registerHelper('listar',()=>{
-	listaUsuarios = require('./usuarios.json');
-	let texto = 'lista de usuarios';
-	listaUsuarios.forEach(usuario =>{
-		texto = 
-  usuario.documentoDeIdentidad +
- usuario.nombre + 
- usuario.correo + 
- usuario.telefono 
-	})
-	return texto;
-})
+
 
 hbs.registerHelper('crear',(documentoDeIdentidad,nombre,correo,telefono)=>{
 	listaUsuarios = require('./funcionesUsuario');
@@ -38,6 +27,7 @@ hbs.registerHelper('listarCursos',()=>{
 	<tbody>';
 
 	listaCursos.forEach((curso) =>{
+		if(curso.estado === 'disponible'){
 		texto = texto +
 		'<tr>' + 
 		'<td>' + curso.nombre + '</td>' +
@@ -46,7 +36,10 @@ hbs.registerHelper('listarCursos',()=>{
 		'<td>' + curso.valor + '</td>' +
 		'<td>' + curso.modalidad + '</td>' +
 		'<td>' + curso.intensidadHoraria + '</td>' +
-		'<td>' + curso.estado + '</td>' 
+		
+			'<td>' + curso.estado + '</td>' 
+		}
+
 	});
 	texto = texto + '</tr></tbody></table>'
 
@@ -77,6 +70,32 @@ hbs.registerHelper('listarUsuarios',()=>{
 	return texto;
 });
 
+hbs.registerHelper('listarCursosAbiertos',()=>{
+	listaUsuarios = require('./usuarios.json');
+	let texto = '<table class="table table-striped table-hover">\
+	<thead class="thdead-dark">\
+	<th>Nombre</th>\
+	<th>Id</th>\
+	<th>descripcion</th>\
+	<th>valor</th>\
+	<th>modalidad</th>\
+	<th>Intensidad</th>\
+	<th>Estado</th>\
+	</thead>\
+	<tbody>';
 
+	listaCursos.forEach((curso) =>{
+		texto = texto +
+		'<tr>' + 
+		'<td>' + curso.nombre + '</td>' +
+		'<td>' + curso.idCurso + '</td>' +
+		'<td>' + curso.descripcion + '</td>' +
+		'<td>' + curso.valor + '</td>' +
+		'<td>' + curso.modalidad + '</td>' +
+		'<td>' + curso.intensidadHoraria + '</td>' +
+		'<td>' + curso.estado + '</td>' 
+	});
+	texto = texto + '</tr></tbody></table>'
 
-
+	return texto;
+});

@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const hbs = require('hbs');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const listaUsuarios = require('./usuarios.json');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
 const directoriopartials = path.join(__dirname,'../../templates/partials' );
@@ -16,6 +17,29 @@ app.get('/',(req,res) =>{
 		estudiante:'sebastian'});
 });
 path.join(__dirname,'../../public' );
+
+app.get('/login', function(req, res){
+   res.render('login');
+});
+
+app.post('/login', function(req, res){
+
+   if(!req.body.id){
+      res.render('login', {message: "Please enter id"});
+   } else {
+      listaUsuarios.filter(function(user){
+      	console.log(user.documentoDeIdentidad);
+      	console.log(user.rol);
+         if(user.documentoDeIdentidad === req.body.id  && user.rol === 'aspirante'){
+            res.redirect('/verCursos');
+         }
+         else if(user.documentoDeIdentidad === req.body.id  && user.rol === 'coordinador'){
+         	res.redirect('/verCursosAbiertos');
+         }
+      });
+      res.render('login', {message: "Invalid credentials!"});
+   }
+});
 
 app.post('/verUsuarios',(req,res)=>{
 	res.render('verUsuarios',{
@@ -34,8 +58,28 @@ app.get('/crearCurso',(req,res)=>{
 	res.render('crearCurso')
 });
 
+app.get('/verCursos',(req,res)=>{
+	res.render('verCursos')
+});
+
+app.get('/verCursosAbiertos',(req,res)=>{
+	res.render('verCursosAbiertos')
+});
+
 app.post('/VerCursos',(req,res)=>{
 	res.render('verCursos',{
+		nombre : req.body.nombre,
+		idCurso: req.body.idCurso,
+		descripcion: req.body.descripcion,
+		valor: req.body.valor,
+		modalidad: req.body.modalidad,
+		intensidadHoraria: req.body.intensidadHoraria
+	});
+
+});
+
+app.post('/VerCursosAbiertos',(req,res)=>{
+	res.render('verCursosAbiertos',{
 		nombre : req.body.nombre,
 		idCurso: req.body.idCurso,
 		descripcion: req.body.descripcion,
