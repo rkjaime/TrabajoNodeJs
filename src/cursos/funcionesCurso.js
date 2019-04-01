@@ -2,7 +2,6 @@ const fs = require ('fs');
 listaCursos = [];
 
 const crearCurso = (nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado) => {
-	console.log(nombre);
 	listarCurso();	
 	let cur = {
 		nombre : nombre,

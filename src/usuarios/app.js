@@ -18,7 +18,6 @@ app.get('/',(req,res) =>{
 path.join(__dirname,'../../public' );
 
 app.post('/verUsuarios',(req,res)=>{
-	console.log(req.body);
 	res.render('verUsuarios',{
 		documentoDeIdentidad: req.body.id,
 		nombre: req.body.nombre,
@@ -36,14 +35,13 @@ app.get('/crearCurso',(req,res)=>{
 });
 
 app.post('/VerCursos',(req,res)=>{
-	console.log(req.body);
 	res.render('verCursos',{
 		nombre : req.body.nombre,
-		idCurso: req.body.id,
+		idCurso: req.body.idCurso,
 		descripcion: req.body.descripcion,
 		valor: req.body.valor,
 		modalidad: req.body.modalidad,
-		intensidadHoraria: req.body.intensidad
+		intensidadHoraria: req.body.intensidadHoraria
 	});
 
 });
