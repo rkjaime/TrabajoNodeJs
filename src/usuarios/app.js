@@ -31,10 +31,10 @@ app.post('/login', function(req, res){
       	console.log(user.documentoDeIdentidad);
       	console.log(user.rol);
          if(user.documentoDeIdentidad === req.body.id  && user.rol === 'aspirante'){
-            res.redirect('/verCursos');
+            res.redirect('/verCursosAbiertos');
          }
          else if(user.documentoDeIdentidad === req.body.id  && user.rol === 'coordinador'){
-         	res.redirect('/verCursosAbiertos');
+         	res.redirect('/verCursos');
          }
       });
       res.render('login', {message: "Invalid credentials!"});

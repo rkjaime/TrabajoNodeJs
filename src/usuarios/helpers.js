@@ -12,7 +12,7 @@ hbs.registerHelper('crearCurso',(nombre,idCurso,descripcion,valor,modalidad,inte
 	listaCursos.crearCurso(nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria,estado);
 });
 
-hbs.registerHelper('listarCursos',()=>{
+hbs.registerHelper('listarCursosAbiertos',()=>{
 	listaUsuarios = require('./usuarios.json');
 	let texto = '<table class="table table-striped table-hover">\
 	<thead class="thdead-dark">\
@@ -70,7 +70,7 @@ hbs.registerHelper('listarUsuarios',()=>{
 	return texto;
 });
 
-hbs.registerHelper('listarCursosAbiertos',()=>{
+hbs.registerHelper('listarCursos',()=>{
 	listaUsuarios = require('./usuarios.json');
 	let texto = '<table class="table table-striped table-hover">\
 	<thead class="thdead-dark">\
