@@ -1,14 +1,25 @@
 const hbs = require('hbs');
 
 hbs.registerHelper('listarIncribir',()=>{
-	listaEstudiantes = require('./usuariosCursos/CursosUsuarios.json');
-	listaEstudiantes = require('./usuariosCursos/CursosUsuarios.json');
-	let texto = '';
-	listaEstudiantes.forEach(estudiante =>{
-		texto = texto + estudiante.nombre + '         ' + estudiante.documentoDeIdentidad + '         ' ;
-	})
-	return texto;
-})
+	listaCursos = require('./usuarios.json');
+		let texto = '<table class="table table-striped table-hover">\
+		<thead class="thdead-dark">\
+		<th>Nombre Estudiante</th>\
+		<th>Nombre Curso</th>\
+		</thead>\
+		<tbody>';
+	
+		listaCursos.forEach((curso) =>{
+			texto = texto +
+			'<tr>' + 
+			'<td>' + curso.documentoDeIdentidad + '</td>' +
+			'<td>' + curso.nombre + '</td>' +
+			'<td>' + '< input id="eliminar" type="button " value="'+ curso.nombre+'" /> '+ '</td>'
+		});
+		texto = texto + '</tr></tbody></table>'
+	
+		return texto;
+	});
 
 hbs.registerHelper('inscribir',(documento, nombre)=>{
 	let texto = '';
