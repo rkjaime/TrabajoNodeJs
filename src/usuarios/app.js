@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
+const port = process.env.PORT || 3000;
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
@@ -139,7 +140,7 @@ app.post('/VerCursos',(req,res)=>{
 			});
 		}		
 	})
-	res.render('VerCursos');
+	res.render('crearCurso');
 });
 
 
@@ -268,6 +269,6 @@ mongoose.connect('mongodb://localhost:27017/asignaturas',{useNewUrlParser :true}
 
 //app.use(express.static(__dirname + '/public'))
 console.log(__dirname);
-app.listen(5000,()=>{
-	console.log('escucha por el puerto');
+app.listen(port,()=>{
+	console.log('escucha por el puerto' + port);
 });
