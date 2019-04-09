@@ -1,10 +1,4 @@
-{{>headerUsuario}}
-<h2>se muestra el ver inscritos</h2>
-<h2>Cursos inscritos</h2>
-	<div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
-		<form novalidate [formGroup]="userForm"action="/eliminar" method="get">
-			 {{listarIncribir}} 
-		</form>
-	</div>
-</div>
+{{>header}}
+{{crear documentoDeIdentidad nombre correo telefono}}
+{{{listarInscribir listado}}}
 {{>footer}}

@@ -16,11 +16,13 @@
     "hbs": "^4.0.3",
     "helpers": "0.0.6",
     "jquery": "^3.3.1",
+    "mongoose-unique-validator": "^2.0.2",
     "nodemon": "^1.18.10",
     "popper.js": "^1.15.0",
     "yargs": "^13.2.2"
   },
   "devDependencies": {
+    "express-session": "^1.15.6",
     "mongoose": "^5.4.22"
   }
 }

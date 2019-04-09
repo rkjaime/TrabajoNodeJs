@@ -15,12 +15,10 @@ const crearCurso = (nombre,idCurso,descripcion,valor,modalidad,intensidadHoraria
 	let duplicado = listaCursos.find(id => id.idCurso == idCurso);
 	if(!duplicado){
 	listaCursos.push(cur);	
-	guardarCurso();
-	
+	guardarCurso();	
 	}
 else
 	console.log('ya existe otro curso con ese id')
-
 }
 
 const listarCurso = () => {
