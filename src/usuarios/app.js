@@ -34,6 +34,10 @@ app.get('',(req,res) =>{
 	res.render('login');
 });
 
+app.post('',(req,res) =>{
+	res.render('login');
+});
+
 app.get('/login', function(req, res){
    res.render('login');
 });
@@ -65,26 +69,49 @@ app.post('/login', (req, res) => {
         })
     })
 })
-app.post('/verUsuarios',(req,res)=>{
 
-	let estudiante = new Estudiante({
+app.post('/crearUsuario', (req, res) => {
+    Estudiante.findOne({ documentoDeIdentidad: req.body.documentoDeIdentidad }, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (resu != null) {
+        	console.log(resu)
+        	console.log(1)
+            return res.render('crearUsuario', {
+            	tipoMensaje: 'alert alert-danger',
+                mostrar: "Usuario ya registrado."
+            });
+        }
+        let estudiante = new Estudiante({
 		documentoDeIdentidad: req.body.id,
 		nombre: req.body.nombre,
 		correo: req.body.correo,
 		telefono:req.body.telefono	
-	})
-	estudiante.save((err,resultado) =>{
-		if(!resultado){
-			res.render('crearUsuario',{
-                tipoMensaje: 'alert alert-danger',
-                mensaje: 'Ha ocurrido un problema'
-			});
-		}
-        res.render('crearUsuario',{
+        });
+        estudiante.save((err, resultado) => {
+            if (err) {
+            	console.log(err)
+            	console.log(2)
+                return res.render('crearUsuario', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'El usuario ya esta registrado'
+                });
+            }
+            if (!resultado) {
+            	console.log(resultado)
+            	console.log(3)
+                return res.render('crearUsuario', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'El usuario ya esta registrado'
+                });
+            }
+        res.render('paginaInicialUsuario',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'se ha ingresado correctamente' + resultado.nombre
+                mensaje: 'bienvenido ' + resultado.nombre
         })
-        })
+        });
+    });
 });
 
 app.get('/crearUsuario',(req,res)=>{

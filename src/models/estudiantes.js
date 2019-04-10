@@ -11,25 +11,24 @@ const estudianteSchema = new Schema({
 	nombre :{
 		type: String,
 		require: [true, 'ingrese el nombre'],
-		trim: true
 	},
 	correo:{
 		type:String,
 		require: [true, 'ingrese el correo'],
-		trim: true
 	},
 	telefono:{
 		type:String,
 		require: [true, 'ingrese el telefono'],
-		trim: true
 	},
 	rol:{
 		type:String,
-		default: 'aspirante'
+		default: 'aspirante',
+        trim: true,
+        enum: { values: ['aspirante', 'coordinador'] }
 	}
 });
 
-estudianteSchema.plugin(uniqueValidator,{message: '{PATH} must be unique'});
+estudianteSchema.plugin(uniqueValidator);
 const Estudiante = mongoose.model('Estudiante',estudianteSchema);
 
 module.exports = Estudiante
