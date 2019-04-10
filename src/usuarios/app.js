@@ -12,6 +12,11 @@ const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
 const directoriopartials = path.join(__dirname,'../../templates/partials' );
+const dirNode_modules = path.join(__dirname , '../../node_modules/');
+app.use('/css', express.static(dirNode_modules + '/bootstrap/dist/css'));
+app.use('/js', express.static(dirNode_modules + '/jquery/dist'));
+app.use('/js', express.static(dirNode_modules + '/popper.js/dist'));
+app.use('/js', express.static(dirNode_modules + '/bootstrap/dist/js'));
 app.use(express.static(directoriopublico));
 hbs.registerPartials(directoriopartials);
 app.use(bodyParser.json());
@@ -26,34 +31,32 @@ app.use(session({
 path.join(__dirname,'../../public' );
 
 app.get('',(req,res) =>{
-	res.render('index');
+	res.render('login');
 });
 
 app.get('/login', function(req, res){
    res.render('login');
 });
 
-app.post('/login', function(req, res){
-
-	Estudiante.findOne({documentoDeIdentidad : req.body.documentoDeIdentidad},(err,resultados) =>{
-		if(err){
-			return console.log(err)
-		}
-		if(!resultados){
-			return res.render('login',{
-				mensaje : "usuario no encontrado"
-			})
-		}
-		if(resultados.rol == 'coordinador'){
-			return res.render('paginaInicialCoordinador',{
-				mensaje : "coordinador no encontrado"
-			})
-		}				
-		req.session.documentoDeIdentidad = resultados._id
-		res.render('paginaInicialUsuario',{
-			mensaje: "bienvenido" + resultados.documentoDeIdentidad + req.session.usuario
-		})
-	})
+app.post('/login', (req, res) => {
+    Estudiante.findOne({documentoDeIdentidad: req.body.documentoDeIdentidad},(err,resultados) =>{
+        if(!resultados){
+            return res.render('login',{
+                tipoMensaje: 'alert alert-danger',
+                mensaje: 'Usuario no existe'
+            })
+        }
+        if(resultados.rol == 'coordinador'){
+            return res.render('paginaInicialCoordinador',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'bienvenido'
+            })
+        }                
+        res.render('paginaInicialUsuario',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'bienvenido ' + resultados.nombre
+        })
+    })
 })
 app.post('/verUsuarios',(req,res)=>{
 
@@ -64,18 +67,17 @@ app.post('/verUsuarios',(req,res)=>{
 		telefono:req.body.telefono	
 	})
 	estudiante.save((err,resultado) =>{
-		if(err){
-			res.render('verUsuarios',{
-				mostrar : err
+		if(!resultado){
+			res.render('crearUsuario',{
+                tipoMensaje: 'alert alert-danger',
+                mensaje: 'Ha ocurrido un problema'
 			});
 		}
-		if(err){
-			res.render('verUsuarios',{
-				mostrar : resultado
-			});
-		}		
-	})
-	res.render('crearUsuario');
+        res.render('crearUsuario',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'se ha ingresado correctamente' + resultado.nombre
+        })
+        })
 });
 
 app.get('/crearUsuario',(req,res)=>{
@@ -106,7 +108,6 @@ app.post('/actualizar',(req,res)=>{
 		if(err){
 			return console.log(err)
 		}
-		console.log(resultado.nombre);
 		res.render('actualizar',{
 		nombre : resultado.nombre,
 		idCurso: resultado.idCurso,
@@ -225,18 +226,17 @@ app.post('/verInscritos',(req,res)=>{
 		telefono:req.body.telefono	
 	})
 	aspirante.save((err,resultado) =>{
-		if(err){
-			res.render('verInscritos',{
-				mostrar : err
+		if(!resultado){
+			res.render('inscribir',{
+                tipoMensaje: 'alert alert-danger',
+                mensaje: 'Ha ocurrido un problema'
 			});
 		}
-		if(err){
-			res.render('verInscritos',{
-				mostrar : resultado
-			});
-		}		
-	})
-	res.render('inscribir');
+        res.render('inscribir',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'se ha ingresado correctamente'
+        })
+        })
 });
 
 app.get('/verInscritos',(req,res)=>{
@@ -249,8 +249,6 @@ Aspirante.find({}).exec((err,respuesta)=>{
 		})
 	})
 });
-
-
 
 app.get('*',(req,res)=>{
 	res.render('error',{
@@ -274,7 +272,6 @@ app.post('/eliminarInscrito',(req,res)=>{
 		if(err){
 			return console.log(err)
 		}
-
 		res.render('eliminarInscrito',{
 			documentoDeIdentidad:resultado.documentoDeIdentidad
 		})
@@ -288,7 +285,6 @@ mongoose.connect('mongodb://localhost:27017/asignaturas',{useNewUrlParser :true}
 		console.log("conectado");
 	});
 
-//app.use(express.static(__dirname + '/public'))
 console.log(__dirname);
 app.listen(port,()=>{
 	console.log('escucha por el puerto' + port);

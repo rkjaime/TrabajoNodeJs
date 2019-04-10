@@ -1,3 +1,8 @@
 {{>header}}
+    {{#if mensaje }}
+        <div class="{{tipoMensaje}}" role="alert">
+        {{mensaje}}
+        </div>
+    {{/if}}
 <h2>Esta es la pagina inicial del coordinador</h2>
 {{>footer}}

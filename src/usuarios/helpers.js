@@ -24,7 +24,10 @@ hbs.registerHelper('listarCursosAbiertos',(listado)=>{
 	listado.forEach((curso) =>{
 		if(curso.estado === 'disponible'){
 		texto = texto +
-		  `<div class="card">
+		  `	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+		  <div class="card">
 			    <div class="card-header" id="heading${i}">
 			      <h5 class="mb-0">
 			        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
@@ -83,7 +86,7 @@ hbs.registerHelper('listarInscribir',(listado)=>{
 	<th>documentoDeIdentidad</th>
 	<th>Nombre</th>
 	<th>Correo</th>
-	<th>Telefono</th>
+	<th>Curso</th>
 	<th></th>
 	</thead>
 	<tbody>`;

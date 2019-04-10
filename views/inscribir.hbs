@@ -1,4 +1,5 @@
 {{>headerUsuario}}
+{{>alerta}}
 <div id="createUser" class="container">
 <h2>Formulario para elegir nuevo curso</h2>
 <p>utilice este formulario para ingresar la informacion del usuario y el curso</p>
@@ -8,19 +9,31 @@
 		<form novalidate [formGroup]="userForm"action="/verInscritos" method="post">
                 <div class="form-group col-md-6">
                     <label for="id">Documento de identidad</label>
-                    <input type="text" class="form-control" id="id" name="id">
+                    <input type="text" class="form-control" id="id" name="id" placeholder="" value="" required="">
+                    <div class="invalid-feedback">
+                    Documento de identidad es requerido.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="NOMBRE">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="" required="">
+                    <div class="invalid-feedback">
+                    nombre es requerido.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="correo">Correo</label>
-                    <input type="text" class="form-control" id="correo" name="correo">
+                    <input type="text" class="form-control" id="correo" name="correo" placeholder="" value="" required="">
+                    <div class="invalid-feedback">
+                    Correo es requerido.
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="telefono">Curso</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono">
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="" value="" required="">
+                    <div class="invalid-feedback">
+                    Curso es requerido.
+                    </div>
                 </div>
 			<div class="form-row">
 				<button class="btn btn-outline-primary" type="submit" 
