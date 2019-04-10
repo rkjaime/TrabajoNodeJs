@@ -38,6 +38,13 @@ app.get('/login', function(req, res){
    res.render('login');
 });
 
+app.get('/logout', (req, res) => {
+    res.render('login', {
+            tipoMensaje: 'alert alert-success',
+            mensaje: 'se ha salido correctamente'
+    });
+});
+
 app.post('/login', (req, res) => {
     Estudiante.findOne({documentoDeIdentidad: req.body.documentoDeIdentidad},(err,resultados) =>{
         if(!resultados){

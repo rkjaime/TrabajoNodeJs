@@ -1,4 +1,3 @@
-{{>headerLogin}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,17 +8,24 @@
 <body>
 {{>alerta}}
 <div id="sigunup" class="container">
-<h2>Iniciar sesion</h2>
     <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
         <br>
         <br>
-        <form novalidate [formGroup]="userForm" action ="/login" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Iniciar Sesion</h1>
+        <form class="form-signin" action ="/login" method="post">
             <div class="form-row">
+
                 <div class="form-group col-md-6">
-                    <label for="idCurso">id de usuario</label>
-                    <input type="text" class="form-control" id="documentoDeIdentidad" name="documentoDeIdentidad">
+                    <label for="idCurso">Documento de identidad</label>
+                    <input type="text" class="form-control" id="documentoDeIdentidad" name="documentoDeIdentidad" required="true" autofocus="">
                 </div>
             </div>
+                <br>
+                <div class="form-row">
+                    <label>
+                    <a href="/crearUsuario">Registrarse</a>
+                    </label>
+                </div>
             <div class="form-row">
                 <button class="btn btn-outline-primary" type="submit"> Sign me up</button>
             </div>
