@@ -6,8 +6,6 @@ const aspiranteSchema = new Schema({
 	documentoDeIdentidad:{
 		type : Number,
 		require: true,
-		unique: true
-
 	},
 	nombre :{
 		type: String,
@@ -22,7 +20,8 @@ const aspiranteSchema = new Schema({
 	telefono:{
 		type:String,
 		require: true,
-		trim: true
+		trim: true,
+
 	}
 });
 aspiranteSchema.plugin(uniqueValidator);

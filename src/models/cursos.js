@@ -10,7 +10,7 @@ const cursoSchema = new Schema({
 	idCurso :{
 		type: Number,
 		require: true,
-		unique: true
+		unique: [true, "el id ya existe"]
 	},
 	descripcion:{
 		type:String,
