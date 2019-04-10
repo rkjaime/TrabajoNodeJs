@@ -97,6 +97,27 @@ app.get('/crearCurso',(req,res)=>{
 	res.render('crearCurso')
 });
 
+app.get('/actualizar',(req,res)=>{
+	res.render('actualizar')
+});
+
+app.post('/actualizar',(req,res)=>{
+	Cursos.findOneAndUpdate({idCurso:req.body.idCurso},req.body,{new : true},(err,resultado)=>{
+		if(err){
+			return console.log(err)
+		}
+		console.log(resultado.nombre);
+		res.render('actualizar',{
+		nombre : resultado.nombre,
+		idCurso: resultado.idCurso,
+		descripcion: resultado.descripcion,
+		valor: resultado.valor,
+		modalidad: resultado.modalidad,
+		intensidadHoraria: resultado.intensidadHoraria,
+		estado: resultado.estado
+		})
+	})
+});
 app.get('/verCursos',(req,res)=>{
 Cursos.find({}).exec((err,respuesta)=>{
 		if(err){

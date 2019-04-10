@@ -21,12 +21,10 @@ const cursoSchema = new Schema({
 		require: true
 	},
 	modalidad:{
-		type:String,
-		require: true
+		type:String
 	},
 	intensidadHoraria:{
-		type:Number,
-		require: true
+		type:Number
 	},
 	estado:{
 		type:String,

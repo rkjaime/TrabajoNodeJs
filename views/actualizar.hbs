@@ -1,0 +1,54 @@
+{{>header}}
+<div id="createUser" class="container">
+<h2>Formulario para crear un nuevo curso</h2>
+<p>utilice este formulario para ingresar la informacion del usuario</p>
+    <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
+        <br>
+        <br>
+        <form novalidate [formGroup]="userForm" action ="/actualizar" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="idCurso">id curso</label>
+                    <input type="text" class="form-control" value="{{idCurso}}" id="idCurso" name="idCurso">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" value="{{nombre}}"  id="nombre" name="nombre">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="modalidad">Modalidad</label>
+                    <select class="form-control" value="{{modalidad}}"  id="modalidad" name="modalidad">
+                    <option>Presencial</option>
+                    <option>Virtual</option>
+                </select>
+                </div> 
+                <div class="form-group col-md-6">
+                    <label for="valor">Valor</label>
+                    <input type="text" class="form-control" value="{{valor}}"  id="valor" name="valor">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="descripcion">Descripcion</label>
+                    <input type="text" class="form-control" value="{{descripcion}}"  id="descripcion" name="descripcion">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="intensidadHoraria">Intensidad Horaria</label>
+                    <input type="text" class="form-control" value="{{intensidadHoraria}}"  id="intensidadHoraria" name="intensidadHoraria">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="estado">Estado</label>
+                    <select class="form-control" id="estado" name="estado">
+                    <option>Disponible</option>
+                    <option>Cerrado</option>
+                </select>
+                </div>           
+            </div>
+            <div class="form-row">
+                <button class="btn btn-outline-primary" type="submit">Guardar</button>
+            </div>
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+
+{{>footer}}

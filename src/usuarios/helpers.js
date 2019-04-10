@@ -18,34 +18,36 @@ hbs.registerHelper('crearUsuarioCurso',(documentoDeIdentidad,nombre,correo,telef
 });
 
 hbs.registerHelper('listarCursosAbiertos',(listado)=>{
-	let texto = '<table class="table table-striped table-hover">\
-	<thead class="thdead-dark">\
-	<th>Nombre</th>\
-	<th>Id</th>\
-	<th>descripcion</th>\
-	<th>valor</th>\
-	<th>modalidad</th>\
-	<th>Intensidad</th>\
-	<th>Estado</th>\
-	</thead>\
-	<tbody>';
-
+	let texto = "<div class='accordion'>";
+	//'<table class="table table-striped table-hover">\
+	i=1;
 	listado.forEach((curso) =>{
 		if(curso.estado === 'disponible'){
 		texto = texto +
-		`<tr>  
-		<td>  ${curso.nombre} </td> 
-		<td>  ${curso.idCurso} </td> 
-		<td>  ${curso.descripcion} </td>
-		<td>  ${curso.valor} </td>
-		<td>  ${curso.modalidad} </td>
-		<td>  ${curso.intensidadHoraria} </td>
-		<td>  ${curso.estado} </td>
-		</tr>`;
+		  `<div class="card">
+			    <div class="card-header" id="heading${i}">
+			      <h5 class="mb-0">
+			        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
+			          ${curso.nombre}
+			        </button>
+			      </h5>
+			    </div>
+
+    <div id="collapse${i}" class="collapse show" aria-labelledby="heading${i}" data-parent="#accordion">
+      <div class="card-body">
+      	id : ${curso.idCurso} <br>
+      	descripcion :  ${curso.descripcion} <br>
+      	valor : ${curso.valor} <br>
+      	modalidad : ${curso.modalidad} <br>
+      	intensidadHoraria : ${curso.intensidadHoraria} <br>
+      	estado : ${curso.estado} <br>
+      </div>
+    </div>`
 		}
+		i=i+1;
 	});
 
-		texto = texto + '</tbody></table>'
+		texto = texto + '</div>'
 
 	return texto;
 });
