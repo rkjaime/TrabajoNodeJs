@@ -21,7 +21,8 @@ const cursoSchema = new Schema({
 		require: true
 	},
 	modalidad:{
-		type:String
+		type:String,
+		enum: { values: ['virtual', 'presencial'] }
 	},
 	intensidadHoraria:{
 		type:Number
