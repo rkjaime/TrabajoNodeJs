@@ -1,12 +1,16 @@
 {{>headerUsuario}}
-{{>alerta}}
+    {{#if mensaje }}
+        <div class="{{tipoMensaje}}" role="alert">
+        {{mensaje}}
+        </div>
+    {{/if}}
 <div id="createUser" class="container">
 <h2>Formulario para elegir nuevo curso</h2>
 <p>utilice este formulario para ingresar la informacion del usuario y el curso</p>
 	<div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
 		<br>
 		<br>
-		<form novalidate [formGroup]="userForm"action="/verInscritos" method="post">
+		<form novalidate [formGroup]="userForm"action="/inscribir" method="post">
                 <div class="form-group col-md-6">
                     <label for="id">Documento de identidad</label>
                     <input type="text" class="form-control" id="id" name="id" placeholder="" value="" required="">

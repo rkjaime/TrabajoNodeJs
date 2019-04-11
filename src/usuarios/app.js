@@ -34,10 +34,6 @@ app.get('',(req,res) =>{
 	res.render('login');
 });
 
-app.post('',(req,res) =>{
-	res.render('login');
-});
-
 app.get('/login', function(req, res){
    res.render('login');
 });
@@ -60,12 +56,12 @@ app.post('/login', (req, res) => {
         if(resultados.rol == 'coordinador'){
             return res.render('paginaInicialCoordinador',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'bienvenido'
+                mensaje: 'bienvenido ' + resultados.nombre + ' a la pagina principal del coordinador'
             })
         }                
         res.render('paginaInicialUsuario',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'bienvenido ' + resultados.nombre
+                mensaje: 'bienvenido ' + resultados.nombre + ' a la pagina principal del usuario'
         })
     })
 })
@@ -76,11 +72,9 @@ app.post('/crearUsuario', (req, res) => {
            return console.log(err)
         }
         if (resu != null) {
-        	console.log(resu)
-        	console.log(1)
             return res.render('crearUsuario', {
             	tipoMensaje: 'alert alert-danger',
-                mostrar: "Usuario ya registrado."
+                mensaje: "Usuario ya registrado."
             });
         }
         let estudiante = new Estudiante({
@@ -91,16 +85,12 @@ app.post('/crearUsuario', (req, res) => {
         });
         estudiante.save((err, resultado) => {
             if (err) {
-            	console.log(err)
-            	console.log(2)
                 return res.render('crearUsuario', {
                 	tipoMensaje: 'alert alert-danger',
                		mensaje: 'El usuario ya esta registrado'
                 });
             }
             if (!resultado) {
-            	console.log(resultado)
-            	console.log(3)
                 return res.render('crearUsuario', {
                 	tipoMensaje: 'alert alert-danger',
                		mensaje: 'El usuario ya esta registrado'
@@ -108,7 +98,7 @@ app.post('/crearUsuario', (req, res) => {
             }
         res.render('paginaInicialUsuario',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'bienvenido ' + resultado.nombre
+                mensaje: 'se ha creado el usuario ' + resultado.nombre + 'has sido redirigido a la pagina principal'
         })
         });
     });
@@ -133,15 +123,71 @@ app.get('/crearCurso',(req,res)=>{
 	res.render('crearCurso')
 });
 
+app.post('/crearCurso', (req, res) => {
+    Cursos.findOne({ idCurso: req.body.idCurso }, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (resu != null) {
+            return res.render('crearUsuario', {
+            	tipoMensaje: 'alert alert-danger',
+                mensaje: "Curso ya creado."
+            });
+        }
+	let curso = new Cursos({
+		nombre : req.body.nombre,
+		idCurso: req.body.idCurso,
+		descripcion: req.body.descripcion,
+		valor: req.body.valor,
+		modalidad: req.body.modalidad,
+		intensidadHoraria: req.body.intensidadHoraria	
+	});
+        curso.save((err, resultado) => {
+            if (err) {
+                return res.render('crearCurso', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'El curso ya esta registrado'
+                });
+            }
+            if (!resultado) {
+                return res.render('crearCurso', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'El curso ya esta registrado'
+                });
+            }
+        res.render('crearCurso',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'el curso' + resultado.nombre + 'se ha creado con exito'
+        })
+        });
+    });
+});
+
 app.get('/actualizar',(req,res)=>{
 	res.render('actualizar')
 });
 
-app.post('/actualizar',(req,res)=>{
+app.post('/actualizar', (req, res) => {
+    Cursos.findOne({ idCurso: req.body.idCurso }, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (!resu) {
+            return res.render('actualizar', {
+            	tipoMensaje: 'alert alert-danger',
+                mensaje: 'No hay cursos con ese id para cambiar'
+            });
+        }
 	Cursos.findOneAndUpdate({idCurso:req.body.idCurso},req.body,{new : true},(err,resultado)=>{
 		if(err){
 			return console.log(err)
 		}
+        if (!resultado) {
+            return res.render('actualizar', {
+               	tipoMensaje: 'alert alert-danger',
+               	mensaje: 'Hay un problema,intentelo de nuevo'
+             });
+        }
 		res.render('actualizar',{
 		nombre : resultado.nombre,
 		idCurso: resultado.idCurso,
@@ -149,10 +195,14 @@ app.post('/actualizar',(req,res)=>{
 		valor: resultado.valor,
 		modalidad: resultado.modalidad,
 		intensidadHoraria: resultado.intensidadHoraria,
-		estado: resultado.estado
+		estado: resultado.estado,
+		tipoMensaje: 'alert alert-success',
+        mensaje: 'el curso ' + resultado.nombre + ' se ha actualizado con exito'
 		})
 	})
 });
+});
+
 app.get('/verCursos',(req,res)=>{
 Cursos.find({}).exec((err,respuesta)=>{
 		if(err){
@@ -175,102 +225,46 @@ Cursos.find({}).exec((err,respuesta)=>{
 	})
 });
 
-app.post('/VerCursos',(req,res)=>{
-	let curso = new Cursos({
-		nombre : req.body.nombre,
-		idCurso: req.body.idCurso,
-		descripcion: req.body.descripcion,
-		valor: req.body.valor,
-		modalidad: req.body.modalidad,
-		intensidadHoraria: req.body.intensidadHoraria	
-	})
-	curso.save((err,resultado) =>{
-		if(err){
-			res.render('VerCursos',{
-				mostrar : err
-			});
-		}
-		if(err){
-			res.render('VerCursos',{
-				mostrar : resultado
-			});
-		}		
-	})
-	res.render('crearCurso');
-});
-
-
-app.post('/VerCursosAbiertos',(req,res)=>{
-	let curso = new Cursos({
-		nombre : req.body.nombre,
-		idCurso: req.body.idCurso,
-		descripcion: req.body.descripcion,
-		valor: req.body.valor,
-		modalidad: req.body.modalidad,
-		intensidadHoraria: req.body.intensidadHoraria	
-	})
-	curso.save((err,resultado) =>{
-		if(err){
-			res.render('VerCursosAbiertos',{
-				mostrar : err
-			});
-		}
-		if(err){
-			res.render('VerCursosAbiertos',{
-				mostrar : resultado
-			});
-		}		
-	})
-	res.render('VerCursosAbiertos');
-});
 app.get('/inscribir',(req,res)=>{
 	res.render('inscribir')
 })
 
-app.post('/inscribir',(req,res)=>{
-
-	let aspirante = new Aspirante({
+app.post('/inscribir', (req, res) => {
+    Aspirante.findOne({ documentoDeIdentidad: req.body.id,telefono:req.body.telefono}, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (resu != null) {
+            return res.render('inscribir', {
+            	tipoMensaje: 'alert alert-danger',
+                mensaje: "ya existe un usuario registrado a ese curso."
+            });
+        }
+        let aspirante = new Aspirante({
 		documentoDeIdentidad: req.body.id,
 		nombre: req.body.nombre,
 		correo: req.body.correo,
 		telefono:req.body.telefono	
-	})
-	aspirante.save((err,resultado) =>{
-		if(err){
-			res.render('verInscritos',{
-				mostrar : err
-			});
-		}
-		if(err){
-			res.render('verInscritos',{
-				mostrar : resultado
-			});
-		}		
-	})
-	res.render('verInscritos');
-});
-
-
-app.post('/verInscritos',(req,res)=>{
-
-	let aspirante = new Aspirante({
-		documentoDeIdentidad: req.body.id,
-		nombre: req.body.nombre,
-		correo: req.body.correo,
-		telefono:req.body.telefono	
-	})
-	aspirante.save((err,resultado) =>{
-		if(!resultado){
-			res.render('inscribir',{
-                tipoMensaje: 'alert alert-danger',
-                mensaje: 'Ha ocurrido un problema'
-			});
-		}
+        });
+        aspirante.save((err, resultado) => {
+            if (err) {
+                return res.render('inscribir', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'ya existe un usuario registrado a ese curso'
+                });
+            }
+            if (!resultado) {
+                return res.render('inscribir', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'ya existe un usuario registrado a ese curso'
+                });
+            }
         res.render('inscribir',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'se ha ingresado correctamente'
+                mensaje: 'el usuario ' + resultado.nombre + 'se ha registrado al curso ' + resultado.telefono
         })
-        })
+        });
+    });
 });
 
 app.get('/verInscritos',(req,res)=>{
@@ -290,24 +284,16 @@ app.get('*',(req,res)=>{
 	});
 });
 
-app.get('/',(req,res)=>{
-Cursos.find({}).exec((err,respuesta)=>{
-		if(err){
-			return console.log(err)
-		}
-		res.render('verCursosAbiertos',{
-			listado:respuesta
-		})
-	})
-});
-
 app.post('/eliminarInscrito',(req,res)=>{
 	Aspirante.findOneAndDelete({documentoDeIdentidad:req.body.documentoDeIdentidad},req.body,(err,resultado)=>{
 		if(err){
 			return console.log(err)
 		}
 		res.render('eliminarInscrito',{
-			documentoDeIdentidad:resultado.documentoDeIdentidad
+			documentoDeIdentidad:resultado.documentoDeIdentidad,
+			telefono:resultado.telefono,
+			tipoMensaje: 'alert alert-success',
+            mensaje: 'el usuario ' + resultado.nombre + 'ha sido eliminado del curso ' + resultado.telefono
 		})
 	})
 })
