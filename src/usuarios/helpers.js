@@ -128,17 +128,19 @@ hbs.registerHelper('listarCursosUsuarios',(listado)=>{
 });
 
 hbs.registerHelper('listarCursos',(listado)=>{
-	let texto = '<table class="table table-striped table-hover">\
-	<thead class="thdead-dark">\
-	<th>Nombre</th>\
-	<th>Id</th>\
-	<th>descripcion</th>\
-	<th>valor</th>\
-	<th>modalidad</th>\
-	<th>Intensidad</th>\
-	<th>Estado</th>\
-	</thead>\
-	<tbody>';
+	
+	let texto = `<form action="/mostrarInscrito" method="post">
+	'<table class="table table-striped table-hover">
+	<thead class="thdead-dark">
+	<th>Nombre</th>
+	<th>Id</th>
+	<th>descripcion</th>
+	<th>valor</th>
+	<th>modalidad</th>
+	<th>Intensidad</th>
+	<th>Estado</th>
+	</thead>
+	<tbody>`;
 
 	listado.forEach((curso) =>{
 		texto = texto +
@@ -150,8 +152,7 @@ hbs.registerHelper('listarCursos',(listado)=>{
 		<td>  ${curso.modalidad} </td>
 		<td>  ${curso.intensidadHoraria} </td>
 		<td>  ${curso.estado} </td>
-		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}}">Mostrar inscritos</button></td>
-
+		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}">Mostrar inscritos</button></td>
 		</tr>`;
 	});
 		texto = texto + '</tbody></table>'

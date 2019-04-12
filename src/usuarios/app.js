@@ -214,6 +214,7 @@ Cursos.find({}).exec((err,respuesta)=>{
 	})
 });
 
+
 app.get('/verCursosAbiertos',(req,res)=>{
 Cursos.find({}).exec((err,respuesta)=>{
 		if(err){
@@ -224,6 +225,33 @@ Cursos.find({}).exec((err,respuesta)=>{
 		})
 	})
 });
+
+app.post('/mostrarInscrito',(req,res)=>{
+    console.log(req.body.nombre )
+    Aspirante.findOne({ telefono: req.body.nombre }, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (!resu) {
+            return res.render('paginaInicialCoordinador', {
+                tipoMensaje: 'alert alert-danger',
+                mensaje: 'No existen usuarios inscritos en el curso, se ha redirigido a la pagina principal'
+            });
+        }
+Aspirante.find({telefono: req.body.nombre}).exec((err,respuesta)=>{
+    console.log(respuesta)
+        if(err){
+            return console.log(err)
+        }
+        return res.render('mostrarInscrito',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'listado realizado',
+                listado: respuesta
+        })
+    })
+});
+});
+
 
 app.get('/inscribir',(req,res)=>{
 	res.render('inscribir')
