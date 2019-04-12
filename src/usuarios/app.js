@@ -346,13 +346,13 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
+/*mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(error);
 		}
 		console.log("conectado");
-	});
+	});*/
 
 
 let funcion = () => {
