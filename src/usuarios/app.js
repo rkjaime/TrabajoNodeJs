@@ -8,7 +8,7 @@ const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
 const port = process.env.PORT || 3000;
-process.env.urldb ='mongodb://localhost:27017/asignaturas';
+process.env.uri ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
@@ -346,7 +346,7 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
+mongoose.connect(process.env.uri,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(err);
