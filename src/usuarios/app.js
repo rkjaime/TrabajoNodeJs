@@ -8,7 +8,7 @@ const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
 const port = process.env.PORT || 3000;
-process.env.URLDB ='mongodb://localhost:27017';
+process.env.URLDB ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
