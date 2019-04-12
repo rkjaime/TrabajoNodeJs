@@ -16,25 +16,22 @@ hbs.registerHelper('crearUsuarioCurso',(documentoDeIdentidad,nombre,correo,telef
 });
 
 hbs.registerHelper('listarCursosAbiertos',(listado)=>{
-	let texto = "<div class='accordion'>";
+	let texto = "<div class='accordion' id='accordionExample'>";
 	//'<table class="table table-striped table-hover">\
 	i=1;
 	listado.forEach((curso) =>{
 		if(curso.estado === 'disponible'){
 		texto = texto +
-		  `	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-		  <div class="card">
+		  `<div class="card">
 			    <div class="card-header" id="heading${i}">
-			      <h5 class="mb-0">
+			      <h2 class="mb-0">
 			        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
 			          ${curso.nombre}
 			        </button>
-			      </h5>
+			      </h2>
 			    </div>
 
-    <div id="collapse${i}" class="collapse show" aria-labelledby="heading${i}" data-parent="#accordion">
+    <div id="collapse${i}" class="collapse show" aria-labelledby="heading${i}" data-parent="#accordionExample">
       <div class="card-body">
       	id : ${curso.idCurso} <br>
       	descripcion :  ${curso.descripcion} <br>
@@ -46,10 +43,8 @@ hbs.registerHelper('listarCursosAbiertos',(listado)=>{
     </div>`
 		}
 		i=i+1;
-	});
-
-		texto = texto + '</div>'
-
+	})
+		texto = texto + '</div>';
 	return texto;
 });
 
