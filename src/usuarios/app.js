@@ -8,6 +8,7 @@ const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
 const port = process.env.PORT || 3000;
+const process.env.urldb ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
@@ -20,6 +21,7 @@ app.use('/js', express.static(dirNode_modules + '/bootstrap/dist/js'));
 app.use(express.static(directoriopublico));
 hbs.registerPartials(directoriopartials);
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({extended:false}))
 app.set('view engine','hbs');
 app.use(session({
@@ -343,7 +345,7 @@ app.post('/eliminarInscrito',(req,res)=>{
 		})
 	})
 })
-mongoose.connect('mongodb://localhost:27017/asignaturas',{useNewUrlParser :true},(err,resultado) =>
+mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(error);
