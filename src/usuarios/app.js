@@ -8,7 +8,7 @@ const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
 const port = process.env.PORT || 3000;
-process.env.uri ='mongodb://localhost:27017/asignaturas';
+process.env.URLDB ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
@@ -346,7 +346,7 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-mongoose.connect(process.env.uri,{useNewUrlParser :true},(err,resultado) =>
+mongoose.connect(process.env.URLDB,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(err);
@@ -354,26 +354,6 @@ mongoose.connect(process.env.uri,{useNewUrlParser :true},(err,resultado) =>
 		}
 		console.log("conectado");
 	});
-
-
-let funcion = () => {
-const MongoClient = require('mongodb').MongoClient;
-
-// replace the uri string with your connection string.
-const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
-MongoClient.connect(uri, function(err, client) {
-   if(err) {
-        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
-   }
-   console.log('Connected...');
-   const collection = client.db("asignaturas").collection("aspirantes");
-   // perform actions on the collection object
-   client.close();
-});
-};
-
-funcion();
-
 
 console.log(__dirname);
 app.listen(port,()=>{
