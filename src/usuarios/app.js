@@ -348,8 +348,8 @@ app.post('/eliminarInscrito',(req,res)=>{
 
 let funcion = () => {
 const MongoClient = require('mongodb').MongoClient;
-const URLDB = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
 const client = new MongoClient(URLDB, { useNewUrlParser: true });
+console.log(URLDB)
 client.connect(err => {
     console.log(err)
   const collection = client.db("asignaturas").collection("estudiantes");
