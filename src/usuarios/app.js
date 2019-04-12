@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 58887;
 process.env.urldb ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
