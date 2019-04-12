@@ -350,6 +350,7 @@ mongoose.connect(process.env.uri,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(err);
+            console.log(hecho);
 		}
 		console.log("conectado");
 	});
