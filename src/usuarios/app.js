@@ -8,7 +8,7 @@ const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
 const port = process.env.PORT || 3000;
-process.env.URLDB ='mongodb://localhost:27017/asignaturas';
+process.env.URLDB ='mongodb://localhost:27017';
 const session = require('express-session');
 require('./helpers');
 const directoriopublico = path.join(__dirname,'../../public' );
@@ -348,8 +348,8 @@ app.post('/eliminarInscrito',(req,res)=>{
 
 let funcion = () => {
 const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(URLDB, { useNewUrlParser: true });
-console.log(URLDB)
+const client = new MongoClient(process.env.URLDB, { useNewUrlParser: true });
+console.log(process.env.URLDB)
 client.connect(err => {
     console.log(err)
   const collection = client.db("asignaturas").collection("estudiantes");
