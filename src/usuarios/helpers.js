@@ -1,7 +1,5 @@
 const hbs = require('hbs');
 
-
-
 hbs.registerHelper('crear',(documentoDeIdentidad,nombre,correo,telefono)=>{
 	listaUsuarios = require('./funcionesUsuario');
 	listaUsuarios.crear(documentoDeIdentidad,nombre,correo,telefono);
@@ -75,7 +73,6 @@ hbs.registerHelper('listarUsuarios',(listado)=>{
 		</tr>`;
 	})
 	texto = texto + '</tbody></table>'
-
 	return texto;
 });
 
@@ -102,7 +99,31 @@ hbs.registerHelper('listarInscribir',(listado)=>{
 		</tr>`;
 	})
 	texto = texto + '</tbody></table>'
+	return texto;
+});
 
+hbs.registerHelper('listarCursosUsuarios',(listado)=>{
+	let texto = `'<form action="/eliminarInscrito" method="post">
+	<table class="table table-striped table-hover">
+	<thead class="thdead-dark">
+	<th>documentoDeIdentidad</th>
+	<th>Nombre</th>
+	<th>Correo</th>
+	<th>Curso</th>
+	<th></th>
+	</thead>
+	<tbody>`;
+
+	listado.forEach((usuario) =>{
+		texto = texto +
+		`<tr> 
+		<td>  ${usuario.documentoDeIdentidad}</td>
+		<td> ${usuario.nombre} </td> 
+		<td>  ${usuario.correo}  </td> 
+		<td>  ${usuario.telefono}  </td>
+		</tr>`;
+	})
+	texto = texto + '</tbody></table>'
 	return texto;
 });
 
@@ -129,19 +150,10 @@ hbs.registerHelper('listarCursos',(listado)=>{
 		<td>  ${curso.modalidad} </td>
 		<td>  ${curso.intensidadHoraria} </td>
 		<td>  ${curso.estado} </td>
+		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}}">Mostrar inscritos</button></td>
+
 		</tr>`;
 	});
 		texto = texto + '</tbody></table>'
-
 	return texto;
 });
-
-
-
-hbs.registerHelper('inscribir',(documento, nombre)=>{
-	let texto = '';
-		console.log(documento);
-		console.log(nombre);
-		listaUsuarios = require('../usuariosCursos/funcionesUsuariosCursos');
-		listaUsuarios.crear(documento, nombre);
-})
