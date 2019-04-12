@@ -346,14 +346,18 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-mongoose.connect(process.env.URLDB,{useNewUrlParser :true},(err,resultado) =>
-	{
-		if(err){
-			return console.log(err);
-            console.log(hecho);
-		}
-		console.log("conectado");
-	});
+let funcion = () => {
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/test?retryWrites=true";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+};
+
+funcion();
 
 console.log(__dirname);
 app.listen(port,()=>{
