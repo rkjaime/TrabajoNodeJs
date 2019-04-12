@@ -352,7 +352,7 @@ const client = new MongoClient(process.env.URLDB, { useNewUrlParser: true });
 console.log(process.env.URLDB)
 client.connect(err => {
     console.log(err)
-  const collection = client.db("asignaturas").collection("estudiantes");
+  const collection = client.db("test").collection("devices");
     // perform actions on the collection object
   client.close();
 });
