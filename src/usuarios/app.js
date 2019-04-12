@@ -346,27 +346,29 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-/*mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
+mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
 			return console.log(error);
 		}
 		console.log("conectado");
-	});*/
+	});
 
 
 let funcion = () => {
-
-
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-const collection = client.db("test").collection("devices");
-// perform actions on the collection object
-client.close();
-});
 
+// replace the uri string with your connection string.
+const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
+MongoClient.connect(uri, function(err, client) {
+   if(err) {
+        console.log('Error occurred while connecting to MongoDB Atlas...\n',err);
+   }
+   console.log('Connected...');
+   const collection = client.db("test").collection("devices");
+   // perform actions on the collection object
+   client.close();
+});
 };
 
 funcion();
