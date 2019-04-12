@@ -349,7 +349,7 @@ app.post('/eliminarInscrito',(req,res)=>{
 mongoose.connect(process.env.urldb,{useNewUrlParser :true},(err,resultado) =>
 	{
 		if(err){
-			return console.log(error);
+			return console.log(err);
 		}
 		console.log("conectado");
 	});
