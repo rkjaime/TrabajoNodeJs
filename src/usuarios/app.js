@@ -265,8 +265,15 @@ Aspirante.find({telefono: req.body.nombre}).exec((err,respuesta)=>{
 
 
 app.get('/inscribir',(req,res)=>{
-	res.render('inscribir')
-})
+    Cursos.find({}).exec((err,respuesta)=>{
+        if(err){
+            return console.log(err)
+        }
+        res.render('inscribir',{
+            listado:respuesta
+        })
+    })
+});
 
 app.post('/inscribir', (req, res) => {
     Aspirante.findOne({ documentoDeIdentidad: req.body.id,telefono:req.body.telefono}, (err, resu) => {
@@ -300,7 +307,7 @@ app.post('/inscribir', (req, res) => {
             }
         res.render('inscribir',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'el usuario ' + resultado.nombre + 'se ha registrado al curso ' + resultado.telefono
+                mensaje: 'el usuario ' + resultado.nombre + 'se ha registrado al curso ' + resultado.telefono,
         })
         });
     });

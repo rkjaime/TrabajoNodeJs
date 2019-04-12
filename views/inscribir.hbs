@@ -32,13 +32,14 @@
                     Correo es requerido.
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="telefono">Curso</label>
-                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="" value="" required="">
-                    <div class="invalid-feedback">
-                    Curso es requerido.
-                    </div>
-                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="cursoDisponible">Cursos Disponibles</label>
+                        <select name= "telefono" class="form-control">
+                            {{#each listado}}
+                                <option value="{{this.nombre}}">{{this.nombre}}</option>
+                            {{/each}}
+                        </select>
+                 </div>
 			<div class="form-row">
 				<button class="btn btn-outline-primary" type="submit" 
 			>Guardar</button>
