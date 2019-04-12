@@ -214,6 +214,17 @@ Cursos.find({}).exec((err,respuesta)=>{
 	})
 });
 
+app.get('/verCursosCoordinadorAbierto',(req,res)=>{
+Cursos.find({}).exec((err,respuesta)=>{
+        if(err){
+            return console.log(err)
+        }
+        res.render('verCursosCoordinadorAbierto',{
+            listado:respuesta
+        })
+    })
+});
+
 
 app.get('/verCursosAbiertos',(req,res)=>{
 Cursos.find({}).exec((err,respuesta)=>{

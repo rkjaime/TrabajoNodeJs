@@ -26,19 +26,17 @@ hbs.registerHelper('listarCursosAbiertos',(listado)=>{
 			    <div class="card-header" id="heading${i}">
 			      <h2 class="mb-0">
 			        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
-			          ${curso.nombre}
+			          nombre : ${curso.nombre} <br>
+			          descripcion :  ${curso.descripcion} <br>
+			          valor : ${curso.valor} <br>
 			        </button>
 			      </h2>
 			    </div>
 
-    <div id="collapse${i}" class="collapse show" aria-labelledby="heading${i}" data-parent="#accordionExample">
+    <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#accordionExample">
       <div class="card-body">
-      	id : ${curso.idCurso} <br>
-      	descripcion :  ${curso.descripcion} <br>
-      	valor : ${curso.valor} <br>
       	modalidad : ${curso.modalidad} <br>
       	intensidadHoraria : ${curso.intensidadHoraria} <br>
-      	estado : ${curso.estado} <br>
       </div>
     </div>`
 		}
@@ -149,6 +147,40 @@ hbs.registerHelper('listarCursos',(listado)=>{
 		<td>  ${curso.estado} </td>
 		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}">Mostrar inscritos</button></td>
 		</tr>`;
+	});
+		texto = texto + '</tbody></table>'
+	return texto;
+});
+
+hbs.registerHelper('listarCursosInformacion',(listado)=>{
+	
+	let texto = `<form action="/mostrarInscrito" method="post">
+	'<table class="table table-striped table-hover">
+	<thead class="thdead-dark">
+	<th>Nombre</th>
+	<th>Id</th>
+	<th>descripcion</th>
+	<th>valor</th>
+	<th>modalidad</th>
+	<th>Intensidad</th>
+	<th>Estado</th>
+	</thead>
+	<tbody>`;
+
+	listado.forEach((curso) =>{
+		if(curso.estado === 'disponible'){
+		texto = texto +
+		`<tr>  
+		<td>  ${curso.nombre} </td> 
+		<td>  ${curso.idCurso} </td> 
+		<td>  ${curso.descripcion} </td>
+		<td>  ${curso.valor} </td>
+		<td>  ${curso.modalidad} </td>
+		<td>  ${curso.intensidadHoraria} </td>
+		<td>  ${curso.estado} </td>
+		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}">Mostrar inscritos</button></td>
+		</tr>`;
+	}
 	});
 		texto = texto + '</tbody></table>'
 	return texto;
