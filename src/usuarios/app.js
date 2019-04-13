@@ -346,19 +346,17 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
-let funcion = () => {
-const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(process.env.URLDB, { useNewUrlParser: true });
-console.log(process.env.URLDB)
-client.connect(err => {
-    console.log(err)
-  const collection = client.db("test").collection("devices");
+ let funcion = () => {
+ const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
+ const client = new MongoClient(uri, { useNewUrlParser: true });
+ client.connect(err => {
+     console.log(err)
+  const collection = client.db("asignaturas").collection("estudiantes");
     // perform actions on the collection object
-  client.close();
-});
-};
-
-funcion();
+   client.close();
+ });
+ };
 
 console.log(__dirname);
 app.listen(port,()=>{
