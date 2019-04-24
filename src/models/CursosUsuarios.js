@@ -17,11 +17,13 @@ const aspiranteSchema = new Schema({
 		require: true,
 		trim: true
 	},
+	datos:{
+		type:Buffer
+	},
 	telefono:{
 		type:String,
 		require: true,
 		trim: true,
-
 	}
 });
 aspiranteSchema.plugin(uniqueValidator);

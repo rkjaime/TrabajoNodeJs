@@ -7,7 +7,12 @@ const mongoose = require('mongoose');
 const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
+const multer  = require('multer');
 const port = process.env.PORT || 3000;
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+const { Usuarios } = require('./usuarios');
+const usuarios = new Usuarios();
 process.env.URLDB ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
@@ -32,6 +37,54 @@ app.use(session({
 
 path.join(__dirname,'../../public' );
 
+io.on('connection', client => {
+    console.log(client)
+
+    console.log("un usuario se ha conectado")
+
+    // client.emit("mensaje", "Bienvenido a mi página")
+
+    // client.on("mensaje", (informacion) =>{
+    // console.log(informacion)
+    // })
+
+    // client.on("contador", () =>{
+    //     contador ++
+    //     console.log(contador)
+    //     io.emit("contador", contador )
+    // })
+
+    client.on('usuarioNuevo', (usuario) =>{
+        let listado = usuarios.agregarUsuario(client.id, usuario)
+        console.log(listado)
+        let texto = `Se ha conectado ${usuario}`
+        io.emit('nuevoUsuario', texto )
+    })
+
+    client.on('disconnect',()=>{
+        let usuarioBorrado = usuarios.borrarUsuario(client.id)
+        let texto = `Se ha desconectado ${usuarioBorrado.nombre}`
+        io.emit('usuarioDesconectado', texto)
+            })
+
+    client.on("texto", (text, callback) =>{
+        let usuario = usuarios.getUsuario(client.id)
+        let texto = `${usuario.nombre} : ${text}`
+        
+        io.emit("texto", (texto))
+        callback()
+    })
+
+    client.on("textoPrivado", (text, callback) =>{
+        let usuario = usuarios.getUsuario(client.id)
+        let texto = `${usuario.nombre} : ${text.mensajePrivado}`
+        let destinatario = usuarios.getDestinatario(text.destinatario)
+        client.broadcast.to(destinatario.id).emit("textoPrivado", (texto))
+        callback()
+    })
+
+    
+});
 app.get('',(req,res) =>{
 	res.render('login');
 });
@@ -277,7 +330,19 @@ app.get('/inscribir',(req,res)=>{
     })
 });
 
-app.post('/inscribir', (req, res) => {
+/*var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})*/
+ 
+var upload = multer({ })
+
+app.post('/inscribir',upload.single('datos') , (req, res) => {
+    console.log(req.file.buffer);
     Aspirante.findOne({ documentoDeIdentidad: req.body.id,telefono:req.body.telefono}, (err, resu) => {
         if (err) {
            return console.log(err)
@@ -292,7 +357,8 @@ app.post('/inscribir', (req, res) => {
 		documentoDeIdentidad: req.body.id,
 		nombre: req.body.nombre,
 		correo: req.body.correo,
-		telefono:req.body.telefono	
+		telefono:req.body.telefono,
+        datos: req.file.buffer
         });
         aspirante.save((err, resultado) => {
             if (err) {
@@ -346,17 +412,14 @@ app.post('/eliminarInscrito',(req,res)=>{
 	})
 })
 
- let funcion = () => {
- const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://123:123@nodejstdea-m1nj0.mongodb.net/asignaturas?retryWrites=true";
- const client = new MongoClient(uri, { useNewUrlParser: true });
- client.connect(err => {
-     console.log(err)
-  const collection = client.db("asignaturas").collection("estudiantes");
-    // perform actions on the collection object
-   client.close();
- });
- };
+mongoose.connect(process.env.URLDB,{useNewUrlParser :true},(err,resultado) =>
+   {
+       if(err){
+           return console.log(err);
+           console.log(hecho);
+       }
+       console.log("conectado");
+   });
 
 console.log(__dirname);
 app.listen(port,()=>{
