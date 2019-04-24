@@ -7,12 +7,22 @@ const mongoose = require('mongoose');
 const Estudiante = require('../models/estudiantes');
 const Aspirante = require('../models/CursosUsuarios');
 const Cursos = require('../models/cursos');
+const Encuesta = require('../models/encuesta');
 const multer  = require('multer');
+const sgMail = require('@sendgrid/mail');
 const port = process.env.PORT || 3000;
+process.env.SENDGRID_API_KEY='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';
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const { Usuarios } = require('./usuarios');
 const usuarios = new Usuarios();
+const msg = {
+    to : 'jmejia@cidenet.com.co',
+    from : 'jdmejiaq@unal.edu.co',
+    subject: 'bienvenido',
+    text : 'bienvenido a la pagina de Node.js'
+}
 process.env.URLDB ='mongodb://localhost:27017/asignaturas';
 const session = require('express-session');
 require('./helpers');
@@ -82,8 +92,68 @@ io.on('connection', client => {
         client.broadcast.to(destinatario.id).emit("textoPrivado", (texto))
         callback()
     })
+});
 
-    
+app.get('/encuesta',(req,res)=>{
+    Cursos.find({}).exec((err,respuesta)=>{
+        if(err){
+            return console.log(err)
+        }
+        res.render('encuesta',{
+            listado:respuesta
+        })
+    })
+});
+
+app.post('/encuesta',(req,res)=>{
+    Encuesta.findOne({ nombre: req.body.nombre,idCurso:req.body.idCurso}, (err, resu) => {
+        if (err) {
+           return console.log(err)
+        }
+        if (resu != null) {
+            return res.render('encuesta', {
+            	tipoMensaje: 'alert alert-danger',
+                mensaje: "ya se ha hecho una encuesta a este curso con este usuario."
+            });
+        }
+        console.log(req.body.pregunta3)
+        let encuesta = new Encuesta({
+        nombre: req.body.nombre,
+        idCurso: req.body.idCurso,
+		pregunta3: req.body.pregunta3,
+		pregunta4:req.body.pregunta4,
+        pregunta5: req.body.pregunta5
+        });
+        encuesta.save((err, resultado) => {
+            if (err) {
+                return res.render('encuesta', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'ya se ha hecho una encuesta a este curso con este usuario.'
+                });
+            }
+            if (!resultado) {
+                return res.render('encuesta', {
+                	tipoMensaje: 'alert alert-danger',
+               		mensaje: 'ya se ha hecho una encuesta a este curso con este usuario.'
+                });
+            }
+        res.render('encuesta',{
+                tipoMensaje: 'alert alert-success',
+                mensaje: 'el usuario ' + resultado.nombre + 'ha logrado la encuesta'
+        })
+        });
+    });
+});
+
+app.get('/mostrarEncuesta',(req,res)=>{
+    Encuesta.find({}).exec((err,respuesta)=>{
+        if(err){
+            return console.log(err)
+        }
+        res.render('mostrarEncuesta',{
+            listado:respuesta
+        })
+    })
 });
 app.get('',(req,res) =>{
 	res.render('login');
@@ -151,9 +221,20 @@ app.post('/crearUsuario', (req, res) => {
                		mensaje: 'El usuario ya esta registrado'
                 });
             }
+            sgMail
+            .send(msg, (error, result) => {
+              if (error) {
+                  console.log(error)
+                //Do something with the error
+              }
+              else {
+                  console.log('exito')
+                //Celebrate
+              }
+            });
         res.render('paginaInicialUsuario',{
                 tipoMensaje: 'alert alert-success',
-                mensaje: 'se ha creado el usuario ' + resultado.nombre + 'has sido redirigido a la pagina principal'
+                mensaje: 'se ha creado el usuario ' + resultado.nombre + ' has sido redirigido a la pagina principal'
         })
         });
     });
@@ -184,7 +265,7 @@ app.post('/crearCurso', (req, res) => {
            return console.log(err)
         }
         if (resu != null) {
-            return res.render('crearUsuario', {
+            return res.render('crearCurso', {
             	tipoMensaje: 'alert alert-danger',
                 mensaje: "Curso ya creado."
             });
@@ -330,15 +411,6 @@ app.get('/inscribir',(req,res)=>{
     })
 });
 
-/*var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})*/
- 
 var upload = multer({ })
 
 app.post('/inscribir',upload.single('datos') , (req, res) => {
@@ -399,6 +471,7 @@ app.get('*',(req,res)=>{
 });
 
 app.post('/eliminarInscrito',(req,res)=>{
+    console.log(req.body.documentoDeIdentidad)
 	Aspirante.findOneAndDelete({documentoDeIdentidad:req.body.documentoDeIdentidad},req.body,(err,resultado)=>{
 		if(err){
 			return console.log(err)

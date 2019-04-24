@@ -1,0 +1,56 @@
+{{>headerUsuario}}
+{{>alerta}}
+<div id="createEncuesta" class="container">
+<h2>Formulario para encuesta de sastifacion</h2>
+<p>utilice este formulario para encuestar el curso de su eleccion</p>
+    <div class="col-xs-12 col-sm-10 col-md-12 col-sm-offset-1 col-md-offset 2">
+        <br>
+        <br>
+        <form class="needs-validation" action ="/encuesta" method="post">
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value="" required="">
+                    <div class="invalid-feedback">
+                    Nombre es requerido.
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cursoDisponible">Cursos Disponibles</label>
+                        <select name= "idCurso" class="form-control">
+                            {{#each listado}}
+                                <option value="{{this.nombre}}">{{this.nombre}}</option>
+                            {{/each}}
+                        </select>
+                 </div>
+                <div class="form-group">
+                    <label for="pregunta3">Pregunta 3</label>
+                    <textarea class="form-control" id="pregunta3" name="pregunta3" rows="3" cols="100" required=""></textarea>
+                    <div class="invalid-feedback">
+                    campo es requerido.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pregunta4">Pregunta 4</label>
+                    <textarea class="form-control" id="pregunta4" name="pregunta4" rows="3" cols="100" required=""></textarea>
+                    <div class="invalid-feedback">
+                    campo es requerido.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pregunta5">Pregunta 5</label>
+                    <textarea class="form-control" id="pregunta5" name="pregunta5" rows="3" cols="100" required=""></textarea>
+                    <div class="invalid-feedback">
+                    campo es requerido.
+                    </div>
+                </div>
+            <div class="form-group">
+                <button class="btn btn-outline-primary" type="submit">Guardar</button>
+            </div>
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+
+{{>footer}}

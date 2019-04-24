@@ -70,7 +70,8 @@ hbs.registerHelper('listarUsuarios',(listado)=>{
 });
 
 hbs.registerHelper('listarInscribir',(listado)=>{
-	let texto = `'<form action="/eliminarInscrito" method="post">
+	let texto = `<form action="/eliminarInscrito" method="post" name="eliminar">
+	<form action="/mostrarEncuesta" method="post" name="mostrar">
 	<table class="table table-striped table-hover">
 	<thead class="thdead-dark">
 	<th>documentoDeIdentidad</th>
@@ -88,7 +89,8 @@ hbs.registerHelper('listarInscribir',(listado)=>{
 		<td> ${usuario.nombre} </td> 
 		<td>  ${usuario.correo}  </td> 
 		<td>  ${usuario.telefono}  </td>
-		<td> <button class="btn btn-danger" name="documentoDeIdentidad" value="${usuario.documentoDeIdentidad}" >Eliminar</button></td>
+		<td> <button class="btn btn-danger" name="documentoDeIdentidad" value="${usuario.documentoDeIdentidad}">Eliminar</button></td>
+		<td> <a class="btn btn-primary" href="/mostrarEncuesta" name="nombre" value="${usuario.nombre}" type="submit">Mostrar Encuesta</a></td>
 		</tr>`;
 	})
 	texto = texto + '</tbody></table>'
@@ -181,6 +183,33 @@ hbs.registerHelper('listarCursosInformacion',(listado)=>{
 		<td> <button class="btn btn-info" name="nombre" value="${curso.nombre}">Mostrar inscritos</button></td>
 		</tr>`;
 	}
+	});
+		texto = texto + '</tbody></table>'
+	return texto;
+});
+
+hbs.registerHelper('listarEncuesta',(listado)=>{
+	
+	let texto = `<form action="/mostrarInscrito" method="post">
+	'<table class="table table-striped table-hover">
+	<thead class="thdead-dark">
+	<th>Nombre</th>
+	<th>Id</th>
+	<th>pregunta 3</th>
+	<th>pregunta 4</th>
+	<th>pregunta 5</th>
+	</thead>
+	<tbody>`;
+
+	listado.forEach((encuesta) =>{
+		texto = texto +
+		`<tr>  
+		<td>  ${encuesta.nombre} </td> 
+		<td>  ${encuesta.idCurso} </td> 
+		<td>  ${encuesta.pregunta3} </td>
+		<td>  ${encuesta.pregunta4} </td>
+		<td>  ${encuesta.pregunta5} </td>
+		</tr>`;
 	});
 		texto = texto + '</tbody></table>'
 	return texto;

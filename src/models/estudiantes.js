@@ -15,6 +15,7 @@ const estudianteSchema = new Schema({
 	correo:{
 		type:String,
 		require: [true, 'ingrese el correo'],
+		trim: true
 	},
 	telefono:{
 		type:String,
